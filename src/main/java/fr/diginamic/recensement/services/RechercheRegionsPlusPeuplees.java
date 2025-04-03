@@ -11,6 +11,7 @@ import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Region;
 import fr.diginamic.recensement.entites.Ville;
 import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * Affichage des 10 régions les plus peuplées
@@ -21,10 +22,13 @@ import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 public class RechercheRegionsPlusPeuplees extends MenuService {
 
 	@Override
-	public void traiter(Recensement recensement, Scanner scanner) {
+	public void traiter(Recensement recensement, Scanner scanner) throws RecensementException {
 
 		System.out.println("Veuillez saisir un nombre de régions:");
 		String nbRegionsStr = scanner.nextLine();
+		if(nbRegionsStr == null || !NumberUtils.isDigits(nbRegionsStr) || Integer.parseInt(nbRegionsStr) < 1 || Integer.parseInt(nbRegionsStr) > 101){
+			throw new RecensementException("Veuillez entrer un nombre valide");
+		}
 		int nbRegions = Integer.parseInt(nbRegionsStr);
 
 		// On récupére la liste des villes du recensement

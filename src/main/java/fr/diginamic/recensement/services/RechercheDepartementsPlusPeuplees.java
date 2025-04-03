@@ -11,6 +11,7 @@ import fr.diginamic.recensement.entites.Departement;
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Ville;
 import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * Affichage des N départements les plus peuplés
@@ -21,10 +22,13 @@ import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 public class RechercheDepartementsPlusPeuplees extends MenuService {
 
 	@Override
-	public void traiter(Recensement recensement, Scanner scanner) {
+	public void traiter(Recensement recensement, Scanner scanner) throws RecensementException {
 
 		System.out.println("Veuillez saisir un nombre de départements:");
 		String nbDeptsStr = scanner.nextLine();
+		if(!NumberUtils.isDigits(nbDeptsStr)  || Integer.parseInt(nbDeptsStr) < 1 || Integer.parseInt(nbDeptsStr) > 101){
+			throw new RecensementException("Veuillez entrez un nombre valide");
+		}
 		int nbDepts = Integer.parseInt(nbDeptsStr);
 
 		List<Ville> villes = recensement.getVilles();

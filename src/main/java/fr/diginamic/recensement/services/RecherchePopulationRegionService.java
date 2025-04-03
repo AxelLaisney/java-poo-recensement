@@ -15,10 +15,13 @@ import fr.diginamic.recensement.entites.Ville;
 public class RecherchePopulationRegionService extends MenuService {
 
 	@Override
-	public void traiter(Recensement rec, Scanner scanner) {
+	public void traiter(Recensement rec, Scanner scanner) throws RecensementException{
 
 		System.out.println("Quel est le nom (ou le début de nom) de la région recherchée ? ");
 		String choix = scanner.nextLine();
+		if(choix == null){
+			throw new RecensementException("Le nom de la ville est null");
+		}
 
 		List<Ville> villes = rec.getVilles();
 		int somme = 0;
